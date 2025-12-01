@@ -7,7 +7,7 @@ const Home=()=>{
             <Header />
             <div className="container">
                 <div className="row mt-3">
-                    <Link to="/mens" className="col-md-2 mx-auto">
+                    <Link to="/category/men" className="col-md-2 mx-auto">
                         <div className="card position-relative" style={{ width: "14rem", height: "150px" }}>
                             <img src="https://images.unsplash.com/photo-1740620781160-45129cc82da3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" className="card-img-top rounded-0 h-100 img-fluid" alt="..." />
                             <p className="z-0 position-absolute bg-white text-dark d-flex justify-content-center align-items-center nav-p"
@@ -23,7 +23,7 @@ const Home=()=>{
                             </p>
                         </div>
                     </Link>
-                    <Link to="/womens" className="col-md-2 mx-auto">
+                    <Link to="/category/women" className="col-md-2 mx-auto">
                         <div className="card position-relative" style={{ width: "14rem", height: "150px" }}>
                             <img src="https://images.unsplash.com/photo-1713778480925-7ac25bdfa723?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" className="card-img-top rounded-0 h-100 img-fluid" alt="..." />
                             <p className="z-0 position-absolute bg-white text-dark d-flex justify-content-center align-items-center nav-link"
@@ -39,7 +39,7 @@ const Home=()=>{
                             </p>
                         </div>
                     </Link>
-                    <Link to="/kids" className="col-md-2 mx-auto">
+                    <Link to="/category/kid" className="col-md-2 mx-auto">
                         <div className="card position-relative" style={{ width: "14rem", height: "150px" }}>
                             <img src="https://plus.unsplash.com/premium_photo-1661719873453-6c3652949446?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170" className="card-img-top rounded-0 h-100 img-fluid" alt="..." />
                             <p className="z-0 position-absolute bg-white text-dark d-flex justify-content-center align-items-center nav-link"
@@ -55,7 +55,7 @@ const Home=()=>{
                             </p>
                         </div>
                     </Link>
-                    <Link to="/electronics" className="col-md-2 mx-auto">
+                    <Link to="/category/electronics" className="col-md-2 mx-auto">
                         <div className="card position-relative" style={{ width: "14rem", height: "150px" }}>
                             <img src="https://images.unsplash.com/photo-1720983590448-28b749bd403d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1332" className="card-img-top rounded-0 h-100 img-fluid" alt="..." />
                             <p className="z-0 position-absolute bg-white text-dark d-flex justify-content-center align-items-center nav-link"
@@ -131,6 +131,8 @@ const Home=()=>{
 }
 
 export default Home;
+
+
 
 
 

@@ -9,7 +9,7 @@ const ProductsDetails=()=>{
     const {productArr,handleCart, handleQuantityI, handleQuantityD }= useContext(CartContext);
 
     const filteredArr= productArr.filter((p)=> p.addedToWishList);
-    const filteredData= productArr.find((p)=>p._id === id)
+    const filteredData= productArr.find((p)=>p._id === id) 
 
     if (!filteredData) {
         return (

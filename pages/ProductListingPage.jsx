@@ -4,12 +4,57 @@ import Header from "../components/Header";
 import Sidebar from "./Sidebar";
 import { useContext } from "react";
 import CartContext from "../contexts/CartContext";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 const ProductListingPage=()=>{
-    const {productArr, handleCart, handleWishList, category, rating, sort, slider}= useContext(CartContext);
+    const {productArr, handleCart, handleWishList, category, rating, sort, slider }= useContext(CartContext);
+    const { type } = useParams();
+    const location = useLocation(); // useLocation gives full URL info
 
     let filteredProducts = [...productArr];
 
+    const queryParams = new URLSearchParams(location.search);
+    const searchQuery = queryParams.get("search")?.toLowerCase() || "";
+
+    // if (searchQuery) {
+    //     filteredProducts = filteredProducts.filter(prod =>
+    //         prod.title.toLowerCase().includes(searchQuery)
+    //     );
+    // }
+
+//     if (searchQuery) {
+//     const searchWords = searchQuery.toLowerCase().split(" "); // ["kids","winter","collection"]
+//     filteredProducts = filteredProducts.filter(prod =>
+//         searchWords.every(word =>
+//             (prod.title?.toLowerCase().includes(word) ||
+//              prod.category?.toLowerCase().includes(word) ||
+//              prod.gender?.toLowerCase().includes(word))
+//         )
+//     );
+// }
+
+    if (searchQuery) {
+    const searchWords = searchQuery.toLowerCase().split(" "); // ["kids", "winter", "collection"]
+    filteredProducts = filteredProducts.filter(prod =>
+        searchWords.some(word =>
+            (prod.title?.toLowerCase().includes(word) ||
+             prod.category?.toLowerCase().includes(word) ||
+             prod.gender?.toLowerCase().includes(word))
+        )
+    );
+}
+
+
+
+    // ACC TO GENDER PAGE OPENS
+    if (type) {
+        filteredProducts = filteredProducts.filter(
+            p => p.gender.toLowerCase() === type
+        );
+    }
+    
     // CATEGORY (Gender) filter
     if (category.length > 0) {
         filteredProducts = filteredProducts.filter(p => 
@@ -17,8 +62,15 @@ const ProductListingPage=()=>{
         );
     }
 
-    if (slider.value > 0) {
+    // SLIDER - PRICE SORT
+    if (slider.value > 0 && slider.value!= slider.max) {
         filteredProducts = filteredProducts.filter(p => p.price <= slider.value);
+        // filteredProducts = filteredProducts.filter(p =>
+        //     p.price >= slider.min && p.price <= slider.max
+        // );
+    }
+    else if (slider.value > 0 && slider.value === slider.max) {
+        filteredProducts= filteredProducts.filter(p=> p.price>max)
     }
 
     // RATING filter
@@ -33,7 +85,6 @@ const ProductListingPage=()=>{
     if (sort === "highToLow") {
         filteredProducts.sort((a, b) => b.price - a.price);
     }
-
 
     return(
         <>
@@ -70,12 +121,12 @@ const ProductListingPage=()=>{
                                                     <h4 className="card-title text-truncate" style={{ minHeight: "48px" }}>{prod.title}</h4>
                                                     <p>₹{prod.price}</p>
                                                 </Link>
-                                                    <button 
-                                                        onClick={()=>handleCart(prod._id)} 
-                                                        className={`btn ${prod.addedToCart ? "btn-success" : "btn-primary"}`}
-                                                    >
-                                                            {prod.addedToCart ? "Remove from Cart" : "Add to Cart"}
-                                                        </button>
+                                                <button 
+                                                    onClick={()=>handleCart(prod._id)} 
+                                                    className={`btn ${prod.addedToCart ? "btn-success" : "btn-primary"}`}
+                                                >
+                                                    {prod.addedToCart ? "Remove from Cart" : "Add to Cart"}
+                                                </button>
                                                 </div>
                                             </div>
                                         </div>

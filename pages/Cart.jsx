@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import { useContext } from "react";
 import CartContext from "../contexts/CartContext";
 import { useState } from "react";
+import AmountDetails from "./AmountDetails";
 
 const Cart=()=>{
     const {productArr, handleWishList, handleCart, handleQuantityI, handleQuantityD}= useContext(CartContext);
@@ -11,7 +12,7 @@ const Cart=()=>{
     return(
         <>
             <Header />
-            <div className="container">
+            <div className="container position-relative">
                 {
                     cartProducts.map((prod)=>(
                         <div className="card border-0">
@@ -57,7 +58,8 @@ const Cart=()=>{
                                             <button 
                                             className="btn btn-outline-secondary mt-2 rounded-0 px-2"
                                             onClick={() => handleWishList(prod._id)}
-                                            >{prod.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}</button>
+                                            >{prod.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -65,6 +67,12 @@ const Cart=()=>{
                         </div>
                     ))
                 }
+            </div>
+
+            <div className="position-absolute top-50" style={{ left: "60%" }}>
+                <div className="card border-0" style={{ width: "19rem" }}>
+                    <AmountDetails />
+                </div>
             </div>
         </>
     )

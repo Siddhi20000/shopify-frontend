@@ -6,10 +6,11 @@ const CartStaus=()=>{
     const cartList= productArr.filter((prod)=> prod.addedToCart);
 
     return(
-        <div>
+        <span>
             {cartList.length}
-        </div>
+        </span>
     )
 }
 
 export default CartStaus;
+

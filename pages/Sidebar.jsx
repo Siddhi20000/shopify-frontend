@@ -3,54 +3,50 @@ import { useContext, useState } from "react";
 import CartContext from "../contexts/CartContext";
 
 const Sidebar=()=>{
-    const {handleCategory, handleRating, handleSort, onSlide, slider}= useContext(CartContext);
+    const {handleCategory, handleRating, handleSort, onSlide, slider, clearFilters, category}= useContext(CartContext);
 
     return(
         <>
             <div className="d-flex justify-content-between align-items-center">
                 <h3>Filters</h3>
-                <Link className="fs-5 mb-0 text-dark">Clear</Link>
+                <Link className="fs-5 mb-0 text-dark" onClick={clearFilters}>Clear</Link>
             </div>
             <div>
                 <p className="fs-5 fw-bold mt-4">Price</p>
                 <div className="d-flex justify-content-between align-items-center">
                     <p className="mb-0 text-body-tertiary fw-semibold">500</p>
                     <p className="mb-0 text-body-tertiary fw-semibold">1000</p>
-                    <p className="mb-0 text-body-tertiary fw-semibold">1500+</p>
+                    <p className="mb-0 text-body-tertiary fw-semibold">2000+</p>
                 </div>
                 <input type="range" 
                 className="form-range rounded-3 slider" 
                 min="0" max="2000" 
-                step="50" id="range1"
+                step="20" id="range1"
                 style= {{ textColor: "black" }}
-//                onChange={(e) => onSlide(e)}
-//                min="0"
-//                max="2000"
-//                step="50"
                 value={slider.value}
                 onChange={onSlide}
                 ></input>
                 <br />
                 <p className="fs-5 fw-bold mt-4">Category</p>
-                <input type="checkbox" id="mensClothing" onChange={() => handleCategory("Men")} /> men Clothing
+                <input type="checkbox" id="mensClothing" checked={category.includes("Men")} onChange={() => handleCategory("Men")} /> men Clothing
                 <br />
-                <input type="checkbox" id="womensClothing" onChange={() => handleCategory("Women")} /> women Clothing
+                <input type="checkbox" id="womensClothing" checked={category.includes("Women")} onChange={() => handleCategory("Women")} /> women Clothing
                 <br />
-                <input type="checkbox" id="kidsClothing" onChange={() => handleCategory("Kids")} /> kid Clothing
+                <input type="checkbox" id="kidsClothing" checked={category.includes("Kids")} onChange={() => handleCategory("Kids")} /> kid Clothing
                 <br />
-                <input type="checkbox" id="electronicsClothing" onChange={() => handleCategory("Unisex")} /> electronics
+                <input type="checkbox" id="electronicsClothing" checked={category.includes("Unisex")} onChange={() => handleCategory("Unisex")} /> electronics
                 <p className="fs-5 fw-bold mt-4">Rating</p>
-                <input type="radio" id="4star" onChange={() => handleRating(4)} /> 4 star & above
+                <input type="radio" name="rating" id="4star" onChange={() => handleRating(4)} /> 4 star & above
                 <br />
-                <input type="radio" id="3star" onChange={() => handleRating(3)} /> 3 star & above
+                <input type="radio" name="rating" id="3star" onChange={() => handleRating(3)} /> 3 star & above
                 <br />
-                <input type="radio" id="2star" onChange={() => handleRating(2)} /> 2 star & above
+                <input type="radio" name="rating" id="2star" onChange={() => handleRating(2)} /> 2 star & above
                 <br />
-                <input type="radio" id="1star" onChange={() => handleRating(1)} /> 1 star & above
+                <input type="radio" name="rating" id="1star" onChange={() => handleRating(1)} /> 1 star & above
                 <p className="fs-5 fw-bold mt-4">Sort by</p>
-                <input type="radio" id="lowToHigh" onChange={() => handleSort("lowToHigh")} /> - Low to high
+                <input type="radio" name="sort" id="lowToHigh" onChange={() => handleSort("lowToHigh")} /> - Low to high
                 <br />
-                <input type="radio" id="highToLow" onChange={() => handleSort("highToLow")} /> - High to low
+                <input type="radio" name="sort" id="highToLow" onChange={() => handleSort("highToLow")} /> - High to low
             </div>
         </>
     )

@@ -7,6 +7,7 @@ import ProductListingPage from "../pages/ProductListingPage";
 import Cart from "../pages/Cart";
 import WishList from "../pages/WishList";
 import ProductsDetails from "../pages/ProductsDetails";
+import Login from "../pages/Login";
 
 import useFetch from "../src/useFetch";
 import { useState,useEffect } from "react";
@@ -18,8 +19,9 @@ function App() {
   const [rating, setRating] = useState(null);
   const [sort, setSort] = useState(null); 
   const [price, setPrice] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
   const [slider, setSlider] = useState({
-            max: 100, 
+            max: 2000, 
             min: 0, 
             value: 0, 
             label: ''
@@ -86,12 +88,12 @@ function App() {
       setProductArr(updatedData);
     }
 
-    const handleCategory=(cat)=>{
-      if (category.includes(cat)) {
-        setCategory(category.filter(c => c !== cat));
+    const handleCategory=(gender)=>{
+      if (category.includes(gender)) {
+        setCategory(category.filter(c => c !== gender));
       } 
       else {
-        setCategory([...category, cat]);
+        setCategory([...category, gender]);
       }
     }
 
@@ -114,10 +116,20 @@ function App() {
       handlePrice(value); 
   };
 
+  const clearFilters = () => {
+    setCategory([]);
+    setRating(null);
+    setSort(null);
+    setPrice(0);
+    setSlider({ max: 2000, min: 0, value: 0, label: '' });
+};
+
+
   return (
     <>
       <CartContext.Provider value={{productArr, handleCart, handleWishList, handleQuantityI, handleQuantityD,handleCategory, 
-        handleRating, handleSort, category, rating, sort, onSlide, slider, price}}>
+        handleRating, handleSort, category, rating, sort, onSlide, slider, price,
+        searchQuery,setSearchQuery, clearFilters}}>
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -126,6 +138,18 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<WishList />} />
             <Route path="/products/:id" element={<ProductsDetails />} />
+            <Route path="/category/:type" element={<ProductListingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+            path="/"
+            element={
+              searchQuery && searchQuery.trim() !== "" ? (
+              <ProductListingPage />
+            ) : (
+              <Home />
+            )
+          }
+          />
             {/* <Route path="/mens" element={<Home />} />
               <Route path="/womens" element={<Home />} />
               <Route path="/kids" element={<Home />} />
