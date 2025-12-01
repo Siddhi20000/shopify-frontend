@@ -45,12 +45,19 @@ const Header=()=>{
                     </form>
                     <Link to="/login" className="btn btn-secondary rounded-0">Login</Link>
                 </div>
-                <Link to="/wishlist" className="nav-link p-3 border-0 bg-white"><i className="bi bi-heart text-dark" style={{ fontSize: "19px" }}></i></Link><WishListStatus />
+                <Link to="/wishlist" className="nav-link p-3 border-0 bg-white">
+                    <i className="bi bi-heart text-dark position-relative" style={{ fontSize: "19px" }}></i>
+                    <span className="position-absolute top-35 start-300 translate-middle badge border-light rounded-circle bg-danger">
+                        <WishListStatus />
+                    </span>
+                </Link>
+                
                 {/* <button onClick={()=> handleCartStatus} className="p-3 border-0 bg-white"><i className="bi bi-cart3" style={{ fontSize: "22px" }}></i></button><div className="text-black">cart</div> */}
                 <Link to="/cart" className="nav-link mb-1 d-flex align-items-center text-dark">
-                    <i className="bi bi-cart fs-5 text-dark me-2"></i>
-                    <span>cart</span>
-                    <CartStatus />
+                    <i className="bi bi-cart fs-5 text-dark me-2 position-relative"></i>
+                    <span className="position-absolute top-30 start-100 translate-middle badge border-light rounded-circle bg-danger">
+                        <CartStatus />
+                    </span>
                 </Link>
             </nav>
         </div>

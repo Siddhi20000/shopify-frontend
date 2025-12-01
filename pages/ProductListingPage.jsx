@@ -24,29 +24,16 @@ const ProductListingPage=()=>{
     //     );
     // }
 
-//     if (searchQuery) {
-//     const searchWords = searchQuery.toLowerCase().split(" "); // ["kids","winter","collection"]
-//     filteredProducts = filteredProducts.filter(prod =>
-//         searchWords.every(word =>
-//             (prod.title?.toLowerCase().includes(word) ||
-//              prod.category?.toLowerCase().includes(word) ||
-//              prod.gender?.toLowerCase().includes(word))
-//         )
-//     );
-// }
-
     if (searchQuery) {
-    const searchWords = searchQuery.toLowerCase().split(" "); // ["kids", "winter", "collection"]
+    const searchWords = searchQuery.toLowerCase().split(" "); // ["kids","winter","collection"]
     filteredProducts = filteredProducts.filter(prod =>
-        searchWords.some(word =>
+        searchWords.every(word =>
             (prod.title?.toLowerCase().includes(word) ||
              prod.category?.toLowerCase().includes(word) ||
              prod.gender?.toLowerCase().includes(word))
         )
     );
 }
-
-
 
     // ACC TO GENDER PAGE OPENS
     if (type) {
