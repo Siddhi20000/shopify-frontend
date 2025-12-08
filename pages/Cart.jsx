@@ -12,7 +12,9 @@ const Cart=()=>{
     return(
         <>
             <Header />
-            <div className="container position-relative">
+            <div className="container mt-3">
+                <div className="row">
+                    <div className="col-md-8">
                 {
                     cartProducts.map((prod)=>(
                         <div className="card border-0">
@@ -29,7 +31,8 @@ const Cart=()=>{
                                             {prod.title}
                                         </div>
                                         <div className="card-text">
-                                            <h4>${prod.price}</h4>
+                                            {/* <h4>${prod.price}</h4> */}
+                                            <h4>${prod.totalPrice || prod.price}</h4>
                                             <p className="text-body-tertiary fw-bolder">{prod.discount}% off</p>
                                             <span>Quantity: </span>
                                             <button 
@@ -65,14 +68,14 @@ const Cart=()=>{
                                 </div>
                             </div>
                         </div>
-                    ))
-                }
-            </div>
-
-            <div className="position-absolute top-50" style={{ left: "60%" }}>
-                <div className="card border-0" style={{ width: "19rem" }}>
+                    ))}
+                </div>
+                <div className="col-md-4">
+                <div className="card border-0 sticky-top">
                     <AmountDetails />
                 </div>
+                </div>
+            </div>
             </div>
         </>
     )

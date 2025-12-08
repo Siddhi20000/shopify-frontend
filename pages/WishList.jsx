@@ -28,11 +28,14 @@ const WishList=()=>{
                                         </Link> */}
                                         <button 
                                             onClick={()=>handleCart(p._id)} 
-                                            className={`btn ${p.addedToCart ? "btn-success" : "btn-primary"} rounded-0`}>
+                                            className={`btn ${p.addedToCart ? "btn-success" : "btn-primary"} rounded-0`}
+                                            style={{width: "300px"}}
+                                            >
                                             {p.addedToCart ? "Remove from Cart" : "Add to Cart"}
                                         </button>
                                         <button 
                                             className="btn btn-outline-secondary mt-2 rounded-0 px-2"
+                                            style={{width: "300px"}}
                                             onClick={() => handleWishList(p._id)}
                                             >{p.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
                                         </button>

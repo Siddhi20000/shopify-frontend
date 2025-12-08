@@ -43,7 +43,8 @@ const Header=()=>{
                         {/* <i className="bi bi-search bg-light text-secondary me-2" style={{ fontSize: "12px" }}></i>
                         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/> */}
                     </form>
-                    <Link to="/login" className="btn btn-secondary rounded-0">Login</Link>
+                    {/* <Link to="/login" className="btn btn-secondary rounded-0">Login</Link> */}
+                    <Link to="/profile" className="btn btn-secondary rounded-0">Profile</Link>
                 </div>
                 <Link to="/wishlist" className="nav-link p-3 border-0 bg-white">
                     <i className="bi bi-heart text-dark position-relative" style={{ fontSize: "19px" }}></i>

@@ -1,6 +1,7 @@
 import CartStaus from "../components/CartStatus";
 import { useContext } from "react";
 import CartContext from "../contexts/CartContext";
+import { Link } from "react-router-dom";
 
 const AmountDetails=()=>{
     const {productArr}= useContext(CartContext);
@@ -50,6 +51,7 @@ const AmountDetails=()=>{
                 <span>₹{totalAfterDiscount.toFixed(2)}</span>
             </div>
             <hr />
+            <Link to="/checkout" className="btn btn-secondary mt-2 rounded-0 px-2 w-100">Checkout</Link>
 
             <div>You will save ₹{avgDiscount.toFixed(2)} in this order</div>
         </div>
@@ -64,6 +66,5 @@ export default AmountDetails;
 // const amount = productArr
 //   .filter(p => p.addedToCart)
 //   .reduce((acc, curr) => acc + curr.price, 0);
-
 
 

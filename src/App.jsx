@@ -8,6 +8,8 @@ import Cart from "../pages/Cart";
 import WishList from "../pages/WishList";
 import ProductsDetails from "../pages/ProductsDetails";
 import Login from "../pages/Login";
+import ProfilePage from "../pages/ProfilePage";
+import Checkout from "../pages/Checkout";
 
 import useFetch from "../src/useFetch";
 import { useState,useEffect } from "react";
@@ -26,8 +28,7 @@ function App() {
             value: 0, 
             label: ''
         });
-
-    
+        
     const [productArr, setProductArr]= useState(data);
     useEffect(() => {
       setProductArr(data);
@@ -65,25 +66,29 @@ function App() {
 
     const handleQuantityI=(id)=>{
       const updatedData= productArr.map((p)=>{
-        if(p._id !== id){
-          return p
-        }
-        return{
+        if (p._id !== id) return p;
+        const newQty = (p.quantity || 1) + 1;
+
+        return {
           ...p,
-          quantity: (p.quantity || 1) +1
-        }
-      })
+          quantity: newQty,
+          totalPrice: p.price * newQty 
+        };
+      });
       setProductArr(updatedData);
     }
     const handleQuantityD=(id)=>{
       const updatedData= productArr.map((p)=>{
-        if(p._id === id && p.quantity>0){
-          return{
-            ...p,
-            quantity: p.quantity -1
-          }
-        }
-        return p
+        if (p.quantity > 1) {
+      const newQty = p.quantity - 1;
+
+      return {
+        ...p,
+        quantity: newQty,
+        totalPrice: p.price * newQty 
+      };
+    }
+    return p;
       })
       setProductArr(updatedData);
     }
@@ -140,6 +145,8 @@ function App() {
             <Route path="/products/:id" element={<ProductsDetails />} />
             <Route path="/category/:type" element={<ProductListingPage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route
             path="/"
             element={

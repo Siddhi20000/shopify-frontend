@@ -6,7 +6,7 @@ import CartContext from "../contexts/CartContext";
 
 const ProductsDetails=()=>{
     const {id}= useParams();
-    const {productArr,handleCart, handleQuantityI, handleQuantityD }= useContext(CartContext);
+    const {productArr,handleCart, handleQuantityI, handleQuantityD, handleWishList }= useContext(CartContext);
 
     const filteredArr= productArr.filter((p)=> p.addedToWishList);
     const filteredData= productArr.find((p)=>p._id === id) 
@@ -34,8 +34,22 @@ const ProductsDetails=()=>{
                             style={{width: "300px", height: "350px"}} 
                             alt="" />
                             <br />
-                            <button className="btn btn-primary rounded-0 mt-3 px-2" style={{width: "300px"}}>Buy now</button><br />
-                            <button className="btn btn-secondary rounded-0 mt-3 px-2" style={{width: "300px"}}>Add to Cart</button>
+                            {/* <button className="btn btn-primary rounded-0 mt-3 px-2" style={{width: "300px"}}>Buy now</button><br /> */}
+                            <button
+                             onClick={()=>handleCart(filteredData._id)} 
+                             className={`btn ${filteredData.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
+                             style={{width: "300px"}}
+                             >
+                            {filteredData.addedToCart ? "Remove from Cart" : "Add to Cart"}
+                            </button> 
+                            <button 
+                              onClick={() => handleWishList(filteredData._id)}
+                              className="btn btn-outline-secondary mt-2 rounded-0 px-2"
+                              //className={`btn ${filteredData.addedToWishList? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
+                              style={{width: "300px"}}
+                            >
+                                {filteredData.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                            </button>
                         </div>
                         <div className="col-md-8">
                             <p className="fs-3">{filteredData.title}</p>
