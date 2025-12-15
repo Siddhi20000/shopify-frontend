@@ -15,7 +15,7 @@ import useFetch from "../src/useFetch";
 import { useState,useEffect } from "react";
 
 function App() {
-  const {data=[],loading,error}= useFetch("https://shopify-backend-36gr.vercel.app/products");
+  const {data=[],loading,error}= useFetch("https://shopify-backend-vkw8.vercel.app/products");
 
   const [category, setCategory] = useState([]); 
   const [rating, setRating] = useState(null);
