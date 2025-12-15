@@ -79,17 +79,15 @@ function App() {
     }
     const handleQuantityD=(id)=>{
       const updatedData= productArr.map((p)=>{
-        if (p.quantity > 1) {
-      const newQty = p.quantity - 1;
+      if (p._id !== id) return p;
+        const newQty = (p.quantity || 1) - 1;
 
-      return {
-        ...p,
-        quantity: newQty,
-        totalPrice: p.price * newQty 
-      };
-    }
-    return p;
-      })
+        return {
+          ...p,
+          quantity: newQty,
+          totalPrice: p.price * newQty 
+        };
+      });
       setProductArr(updatedData);
     }
 

@@ -46,7 +46,7 @@ const ProductsDetails=()=>{
                               onClick={() => handleWishList(filteredData._id)}
                               className="btn btn-outline-secondary mt-2 rounded-0 px-2"
                               //className={`btn ${filteredData.addedToWishList? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
-                              style={{width: "300px"}}
+                              style={{width: "300px"}} 
                             >
                                 {filteredData.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
                             </button>

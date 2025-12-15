@@ -10,16 +10,16 @@ const WishList=()=>{
     return(
         <>
             <Header />
-            <div className="container">
+            <div className="container p-2">
                 <div className="row">
                     {
                         filteredArr.map((p)=>(
                             <div className="col-md-3">
                                 <div className="card border-0">
-                                    <img src={p.imageUrl} style={{width: "100%", height: "250px", objectfit: "cover" }} className="card-img-top" alt="" />
-                                    <div className="card-body">
+                                    <img src={p.imageUrl} style={{width: "100%", height: "250px", objectfit: "cover" }} className="card-img-top mt-3" alt="" />
+                                    <div className="card-body p-0"> 
                                         <Link to={`/products/${p._id}`} className="nav-link mb-2">
-                                        <h5 className="card-title text-truncate">{p.title}</h5>
+                                        <h5 className="card-title text-truncate mt-1">{p.title}</h5>
                                         <p className="card-text text-truncate">{p.details}</p>
                                         </Link>
                                         {/* <Link to={`/products/${prod._id}`} className="card-body d-flex flex-column nav-link">
@@ -28,16 +28,17 @@ const WishList=()=>{
                                         </Link> */}
                                         <button 
                                             onClick={()=>handleCart(p._id)} 
-                                            className={`btn ${p.addedToCart ? "btn-success" : "btn-primary"} rounded-0`}
-                                            style={{width: "300px"}}
+                                            className={`btn ${p.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2 w-100`}
                                             >
                                             {p.addedToCart ? "Remove from Cart" : "Add to Cart"}
                                         </button>
                                         <button 
-                                            className="btn btn-outline-secondary mt-2 rounded-0 px-2"
-                                            style={{width: "300px"}}
-                                            onClick={() => handleWishList(p._id)}
-                                            >{p.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                                        onClick={() => handleWishList(p._id)}
+                                        className="btn btn-outline-secondary mt-2 rounded-0 px-2"
+                                        //className={`btn ${p.addedToWishList? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
+                                        style={{width: "100%", objectfit: "cover"}} 
+                                        >
+                                        {p.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
                                         </button>
                                     </div>
                                 </div>

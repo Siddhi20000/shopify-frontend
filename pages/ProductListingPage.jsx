@@ -87,7 +87,7 @@ const ProductListingPage=()=>{
                                 filteredProducts.map((prod)=>(
                                     <>
                                         <div className="col-md-3" key={prod._id}>
-                                            <div className="card h-100 p-2 border-0 position-relative">
+                                            <div className="card h-100 p-2 border-0">
                                                 <img src={prod.imageUrl} alt={prod.name} 
                                                 className="card-img-top object-fit-cover rounded-0 h-50 img-fluid"
                                                 />
@@ -99,7 +99,7 @@ const ProductListingPage=()=>{
                                                     <i
                                                     className={`bi ${prod.addedToWishList ? "bi-heart-fill text-danger" : "bi-heart"} fs-5`}
                                                     ></i>
-                                                    </button>
+                                                    </button> 
                                                     {/* <i className="bi bi-heart" style={{ fontSize: "15px" }}>
                                                     </i> */}
                                                 </div > 
@@ -108,12 +108,21 @@ const ProductListingPage=()=>{
                                                     <h4 className="card-title text-truncate" style={{ minHeight: "48px" }}>{prod.title}</h4>
                                                     <p>₹{prod.price}</p>
                                                 </Link>
-                                                <button 
+                                                {/* <button 
                                                     onClick={()=>handleCart(prod._id)} 
-                                                    className={`btn ${prod.addedToCart ? "btn-success" : "btn-primary"}`}
+                                                    //className={`btn ${prod.addedToCart ? "btn-success" : "btn-primary"}`}
+                                                    className={`btn ${filteredData.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
+                                                    style={{width: "300px"}}
+                                                >
+                                                    {prod.addedToCart ? "Remove from Cart" : "Add to Cart"}
+                                                </button> */}
+                                                <button 
+                                                onClick={() => handleCart(prod._id)}
+                                                className={`btn ${prod.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 w-100`}
                                                 >
                                                     {prod.addedToCart ? "Remove from Cart" : "Add to Cart"}
                                                 </button>
+
                                                 </div>
                                             </div>
                                         </div>

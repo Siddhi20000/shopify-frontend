@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const AmountDetails=()=>{
     const {productArr}= useContext(CartContext);
     const amount = productArr.reduce(
-        (acc, p) => p.addedToCart ? acc + p.price : acc,0
+        (acc, p) => p.addedToCart ? acc + p.totalPrice : acc,0
     );
     const delieveryCharges= amount>1000? "40":"299"
 
