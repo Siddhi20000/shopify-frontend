@@ -4,21 +4,35 @@ import CartContext from "../contexts/CartContext";
 import { Link } from "react-router-dom";
 
 const AmountDetails=()=>{
-    const {productArr}= useContext(CartContext);
-    const amount = productArr.reduce(
-        (acc, p) => p.addedToCart ? acc + p.totalPrice : acc,0
-    );
-    const delieveryCharges= amount>1000? "40":"299"
+    const {cartItems}= useContext(CartContext);
 
-    const cartItems = productArr.filter(p => p.addedToCart);
-    
-    const avgDiscount = cartItems.reduce((acc, p) => {
-        const discountAmount = p.price * (p.discount / 100);
-        return acc + discountAmount;
-    }, 0) / (cartItems.length || 1);
+    // Total MRP
+  const totalPrice = cartItems.reduce((sum, item) => {
+    if (!item.productId) return sum;   
+    return sum + item.productId.price * item.quantity;
+}, 0);
 
-    const totalAfterDiscount= amount-avgDiscount
 
+  // Total Discount
+  const totalDiscount = cartItems.reduce(
+    // (acc, item) =>
+    //   acc +
+    //   (item.productId.discount || 0) * item.quantity,
+    // 0
+
+    (acc, item) => {
+        if (!item.productId) return acc;
+        return acc + ((item.productId.discount || 0) * (item.quantity || 1));
+    }, 0
+  );
+  
+
+  // Delivery Charges
+  const deliveryCharges = totalPrice > 500 ? 0 : 40;
+
+  // Final Amount
+  const totalAfterDiscount =
+    totalPrice - totalDiscount + deliveryCharges;
 
     return(
         <div className="card-body">
@@ -29,19 +43,19 @@ const AmountDetails=()=>{
                 <span>
                     Price: (<CartStaus /> item)
                 </span>
-                <span>₹{amount}</span>
+                <span>₹{totalPrice}</span> 
             </div>
             <div className="d-flex justify-content-between align-items-center mt-2">
                 <span>
                     Average Discount: 
                 </span>
-                <p>₹{avgDiscount.toFixed(2)}</p>
+                <p>₹{totalDiscount.toFixed(2)}</p>
             </div>
             <div className="d-flex justify-content-between align-items-center mt-2">
                 <span>
                     Delievery charges: 
                 </span>
-                <span>₹{delieveryCharges}</span>
+                <span>₹{deliveryCharges}</span>
             </div>
             <hr />
             <div className="d-flex justify-content-between align-items-center mt-2">
@@ -53,7 +67,7 @@ const AmountDetails=()=>{
             <hr />
             <Link to="/checkout" className="btn btn-secondary mt-2 rounded-0 px-2 w-100">Checkout</Link>
 
-            <div>You will save ₹{avgDiscount.toFixed(2)} in this order</div>
+            <div>You will save ₹{totalDiscount.toFixed(2)} in this order</div>
         </div>
     )
 }

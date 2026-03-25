@@ -2,12 +2,12 @@ import { useContext } from "react";
 import CartContext from "../contexts/CartContext";
 
 const CartStaus=()=>{
-    const {productArr}= useContext(CartContext);
-    const cartList= productArr.filter((prod)=> prod.addedToCart);
+    const {cartItems}= useContext(CartContext);
+    //console.log("Cart items:", cartItems);
 
     return(
         <span>
-            {cartList.length}
+            {cartItems.length}
         </span>
     )
 }

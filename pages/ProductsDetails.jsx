@@ -6,10 +6,28 @@ import CartContext from "../contexts/CartContext";
 
 const ProductsDetails=()=>{
     const {id}= useParams();
-    const {productArr,handleCart, handleQuantityI, handleQuantityD, handleWishList }= useContext(CartContext);
+    const {
+    productArr,
+    cartItems,
+    wishlistItems,
+    handleCart,
+    handleQuantityI,
+    handleQuantityD,
+    toggleWishlist,
+    handleDelete,
+  } = useContext(CartContext);
 
-    const filteredArr= productArr.filter((p)=> p.addedToWishList);
-    const filteredData= productArr.find((p)=>p._id === id) 
+    const filteredData= productArr.find((p)=>p._id === id) ;
+    const cartItem = cartItems.find(
+    (item) => item.productId?._id === id
+  );
+
+  const isInCart = !!cartItem;
+  const cartItemId = cartItem?._id; // cart document ID
+  
+  const isInWishlist = wishlistItems.some(
+    (w) => w.productId?._id === id
+  );
 
     if (!filteredData) {
         return (
@@ -34,22 +52,21 @@ const ProductsDetails=()=>{
                             style={{width: "300px", height: "350px"}} 
                             alt="" />
                             <br />
-                            {/* <button className="btn btn-primary rounded-0 mt-3 px-2" style={{width: "300px"}}>Buy now</button><br /> */}
+
                             <button
-                             onClick={()=>handleCart(filteredData._id)} 
-                             className={`btn ${filteredData.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
-                             style={{width: "300px"}}
-                             >
-                            {filteredData.addedToCart ? "Remove from Cart" : "Add to Cart"}
-                            </button> 
-                            <button 
-                              onClick={() => handleWishList(filteredData._id)}
-                              className="btn btn-outline-secondary mt-2 rounded-0 px-2"
-                              //className={`btn ${filteredData.addedToWishList? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
-                              style={{width: "300px"}} 
-                            >
-                                {filteredData.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                            //onClick={() => handleCart(filteredData._id)}
+                            onClick={() => isInCart ? handleDelete(cartItemId) : handleCart(filteredData._id)}
+                            className={`btn ${ isInCart ? "btn-success" : "btn-primary"} rounded-0 w-100 mt-3`}>
+                                {isInCart ? "Remove from Cart" : "Add to Cart"}
                             </button>
+                            
+                            <button
+                            onClick={() => toggleWishlist(filteredData._id)}
+                            className="btn btn-outline-secondary rounded-0 w-100 mt-2"
+                            >
+                                {isInWishlist? "Remove from Wishlist": "Add to Wishlist"}
+                            </button>
+
                         </div>
                         <div className="col-md-8">
                             <p className="fs-3">{filteredData.title}</p>
@@ -80,7 +97,7 @@ const ProductsDetails=()=>{
                                 onClick={()=>handleQuantityD(filteredData._id)}
                                 style={{ width: "25px", height: "20px", padding: "0", fontSize: "12px" }}
                             >-
-                             </button>
+                            </button> 
                              <br />
                             {/* {filteredData.size} */}
                             <div className="d-flex mt-3">
@@ -104,23 +121,45 @@ const ProductsDetails=()=>{
                             <h5 className="mt-4">More Items you may like</h5>
                             <div className="row">
                     {
-                        filteredArr.slice(0, 4).map((p)=>(
-                            <div className="col-md-3">
-                                <div className="card border-0">
-                                    <img src={p.imageUrl} style={{width: "100%", height: "250px", objectfit: "cover" }} className="card-img-top" alt="" />
-                                    <div className="card-body">
-                                        <h5 className="card-title text-truncate">{p.title}</h5>
-                                        <p className="fw-bold">{p.price}</p>
-                                        <button 
-                                            onClick={()=>handleCart(p._id)} 
-                                            className={`btn ${p.addedToCart ? "btn-success rounded-0 mt-3" : "btn btn-secondary rounded-0 mt-3"}`} style={{width: "100%"}}>
-                                            {p.addedToCart ? "Remove from Cart" : "Add to Cart"}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
-                    }
+  wishlistItems.slice(0, 4).map((p) => {
+    const product = p.productId;
+    if (!product) return null;
+
+    const wishlistCartItem = cartItems.find(
+      (item) => item.productId?._id === product._id
+    );
+    const isInCart = !!wishlistCartItem;
+    const cartItemId = wishlistCartItem?._id;
+
+    return (
+      <div className="col-md-3" key={product._id}>
+        <div className="card border-0">
+          <img
+            src={product.imageUrl}
+            style={{ width: "100%", height: "250px", objectFit: "cover" }}
+            className="card-img-top"
+            alt=""
+          />
+          <div className="card-body">
+            <h5 className="card-title text-truncate">{product.title}</h5>
+            <p className="fw-bold">{product.price}</p>
+            <button
+              onClick={() =>
+                isInCart ? handleDelete(cartItemId) : handleCart(product._id)
+              }
+              className={`btn ${
+                isInCart ? "btn-success" : "btn-primary"
+              } rounded-0 w-100 mt-3`}
+            >
+              {isInCart ? "Remove from Cart" : "Add to Cart"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  })
+}
+
                 </div>
                         </div>
                     </div>

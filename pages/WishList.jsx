@@ -4,8 +4,7 @@ import CartContext from "../contexts/CartContext";
 import { Link } from "react-router-dom";
 
 const WishList=()=>{
-    const {productArr, handleCart, handleWishList}= useContext(CartContext);
-    const filteredArr= productArr.filter((p)=> p.addedToWishList);
+    const {wishlistItems, cartItems, handleCart, handleRemoveFromWishlist, handleDelete, isInCart}= useContext(CartContext);
 
     return(
         <>
@@ -13,37 +12,41 @@ const WishList=()=>{
             <div className="container p-2">
                 <div className="row">
                     {
-                        filteredArr.map((p)=>(
+                        wishlistItems.map((p)=>{
+                            const product = p.productId;
+                            if (!product) return null;
+                            
+                            const cartItem = cartItems.find(item => item.productId?._id === product._id);
+
+                            return(
                             <div className="col-md-3">
                                 <div className="card border-0">
-                                    <img src={p.imageUrl} style={{width: "100%", height: "250px", objectfit: "cover" }} className="card-img-top mt-3" alt="" />
+                                    <img src={product.imageUrl} style={{width: "100%", height: "250px", objectfit: "cover" }} className="card-img-top mt-3" alt="" />
                                     <div className="card-body p-0"> 
-                                        <Link to={`/products/${p._id}`} className="nav-link mb-2">
-                                        <h5 className="card-title text-truncate mt-1">{p.title}</h5>
-                                        <p className="card-text text-truncate">{p.details}</p>
+                                        <Link to={`/products/${product._id}`} className="nav-link mb-2">
+                                        <h5 className="card-title text-truncate mt-1">{product.title}</h5>
+                                        <p className="card-text text-truncate">{product.details}</p>
                                         </Link>
-                                        {/* <Link to={`/products/${prod._id}`} className="card-body d-flex flex-column nav-link">
-                                                    <h4 className="card-title text-truncate" style={{ minHeight: "48px" }}>{prod.title}</h4>
-                                                    <p>₹{prod.price}</p>
-                                        </Link> */}
                                         <button 
-                                            onClick={()=>handleCart(p._id)} 
-                                            className={`btn ${p.addedToCart ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2 w-100`}
+                                            //onClick={()=> isInCart(product._id) ?handleCart(product._id): handleDelete(product._id)} 
+                                            onClick={() => cartItem ? handleDelete(cartItem._id) : handleCart(product._id)}
+                                            className={`btn ${isInCart(product._id) ? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2 w-100`}
                                             >
-                                            {p.addedToCart ? "Remove from Cart" : "Add to Cart"}
+                                            {isInCart(product._id) ? "Remove from Cart" : "Add to Cart"}
                                         </button>
                                         <button 
-                                        onClick={() => handleWishList(p._id)}
+                                        onClick={() => handleRemoveFromWishlist(p._id)}
                                         className="btn btn-outline-secondary mt-2 rounded-0 px-2"
                                         //className={`btn ${p.addedToWishList? "btn-success" : "btn-primary"} rounded-0 mt-3 px-2`}
                                         style={{width: "100%", objectfit: "cover"}} 
                                         >
-                                        {p.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                                        Remove from Wishlist
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        ))
+                            )
+                        })
                     }
                 </div>
             </div>

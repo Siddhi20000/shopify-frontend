@@ -5,8 +5,8 @@ import { useState } from "react";
 import AmountDetails from "./AmountDetails";
 
 const Cart=()=>{
-    const {productArr, handleWishList, handleCart, handleQuantityI, handleQuantityD}= useContext(CartContext);
-    const cartProducts= productArr.filter((prod)=> prod.addedToCart);
+    const {toggleWishlist, handleDelete, cartItems, isInWishlist, handleQuantityI, handleQuantityD}= useContext(CartContext);
+    //const cartProducts= productArr.filter((prod)=> prod.addedToCart);
     
 
     return(
@@ -16,28 +16,34 @@ const Cart=()=>{
                 <div className="row">
                     <div className="col-md-8">
                 {
-                    cartProducts.map((prod)=>(
+                    //cartProducts.map((prod)=>(
+                    cartItems.map((prod)=>{
+                        const product = prod.productId;
+                        if (!product) return null;
+
+                        console.log("IMAGE URL:", product.imageUrl);
+                        return(
                         <div className="card border-0">
                             <div className="row g-0 align-items-center">
                                 <div className="col-md-4">
-                                    <img src={prod.imageUrl} 
+                                    <img src={product.imageUrl} 
                                     className="cart-img" //"image-fit-cover rounded-0 border-0"
-                                    style={{width: "80%", height: "250px", objectfit: "cover" }}
+                                    style={{width: "80%", height: "250px", objectFit: "cover" }}
                                     alt="" />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="card-body">
                                         <div className="card-title">
-                                            {prod.title}
+                                            {product.title}
                                         </div>
                                         <div className="card-text">
-                                            {/* <h4>${prod.price}</h4> */}
-                                            <h4>${prod.totalPrice || prod.price}</h4>
-                                            <p className="text-body-tertiary fw-bolder">{prod.discount}% off</p>
+                                            {/* <h4>${product.price}</h4> */}
+                                            <h4>${prod.quantity>1? prod.totalPrice: product.price}</h4> 
+                                            <p className="text-body-tertiary fw-bolder">{product.discount}% off</p>
                                             <span>Quantity: </span>
                                             <button 
                                                 className="btn btn-outline-dark btn-sm rounded-4"
-                                                onClick={()=>handleQuantityI(prod._id)}
+                                                onClick={()=>handleQuantityI(product._id)}
                                                 style={{ width: "25px", height: "20px", padding: "0", fontSize: "12px" }}
                                                 >+
                                             </button>
@@ -49,26 +55,29 @@ const Cart=()=>{
                                             </span>
                                             <button 
                                                 className="btn btn-outline-dark btn-sm rounded-4"
-                                                onClick={()=>handleQuantityD(prod._id)}
+                                                onClick={()=>handleQuantityD(product._id)} 
                                                 style={{ width: "25px", height: "20px", padding: "0", fontSize: "12px" }}
                                                 >-
-                                            </button>
+                                            </button> 
                                             <br />
                                             <button 
                                             className="btn btn-secondary rounded-0 mt-3 px-2"
-                                            onClick={()=>handleCart(prod._id)} 
-                                            >Remove from Cart</button><br />
+                                            onClick={()=>handleDelete(prod._id)}> 
+                                                Remove from Cart
+                                            </button>
+                                            <br />
                                             <button 
                                             className="btn btn-outline-secondary mt-2 rounded-0 px-2"
-                                            onClick={() => handleWishList(prod._id)}
-                                            >{prod.addedToWishList? "Remove from Wishlist":"Move to Wishlist"}
+                                            onClick={() => toggleWishlist(product._id)}
+                                            >{isInWishlist(product._id)? "Remove from Wishlist":"Move to Wishlist"}
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    );
+})}
                 </div>
                 <div className="col-md-4">
                 <div className="card border-0 sticky-top">
