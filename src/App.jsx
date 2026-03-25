@@ -15,7 +15,7 @@ import useFetch from "../src/useFetch";
 import { useState,useEffect } from "react";
 
 function App() {
-  const {data=[],loading,error}= useFetch("http://localhost:5000/products");
+  const {data=[],loading,error}= useFetch("https://shopify-backend-mndn.vercel.app/products");
 
   const [category, setCategory] = useState([]); 
   const [rating, setRating] = useState(null);
@@ -50,7 +50,7 @@ function App() {
 
     const fetchCart = async () => {
       try {
-        const response = await fetch("http://localhost:5000/products/api/cart");
+        const response = await fetch("https://shopify-backend-mndn.vercel.app/products/api/cart");
         const data = await response.json();
         setCartItems(data);
       } catch (error) {
@@ -60,7 +60,7 @@ function App() {
 
 const fetchWishlist = async () => {
   try {
-    const res = await fetch("http://localhost:5000/products/api/wishlist");
+    const res = await fetch("https://shopify-backend-mndn.vercel.app/products/api/wishlist");
     const data = await res.json();
 
     // store wishlist documents
@@ -93,7 +93,7 @@ if (error) return <p>Error: {error.message}</p>
 
   const handleCart = async(productId) => {
       try {
-        const response = await fetch(`http://localhost:5000/products/api/cart/${productId}`,
+        const response = await fetch(`https://shopify-backend-mndn.vercel.app/products/api/cart/${productId}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -134,7 +134,7 @@ if (error) return <p>Error: {error.message}</p>
     };
 
     const handleDelete = async (cartItemId) => {
-      await fetch(`http://localhost:5000/products/api/cart/${cartItemId}`, {
+      await fetch(`https://shopify-backend-mndn.vercel.app/products/api/cart/${cartItemId}`, {
         method: "DELETE",
       });
       setCartItems(prev =>
@@ -172,7 +172,7 @@ if (error) return <p>Error: {error.message}</p>
     // }
 
 //     const handleWishList = async (productId) => {
-//       const res = await fetch("http://localhost:5000/products/api/wishlist/addToWishlist",{
+//       const res = await fetch("https://shopify-backend-mndn.vercel.app/products/api/wishlist/addToWishlist",{
 //         method: "POST",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify({ productId }),
@@ -191,7 +191,7 @@ const handleRemoveFromWishlist = async (wishlistItemId) => {
   try {
     // Call backend API to delete the wishlist item
     const res = await fetch(
-      `http://localhost:5000/products/api/wishlist/removeFromWishlist/${wishlistItemId}`,
+      `https://shopify-backend-mndn.vercel.app/products/api/wishlist/removeFromWishlist/${wishlistItemId}`,
       { method: "DELETE" }
     );
 
@@ -224,12 +224,12 @@ const toggleWishlist = async (productId) => {
       if (!item) return;
 
       await fetch(
-        `http://localhost:5000/products/api/wishlist/removeFromWishlist/${item._id}`,
+        `https://shopify-backend-mndn.vercel.app/products/api/wishlist/removeFromWishlist/${item._id}`,
         { method: "DELETE" }
       );
     } else {
       await fetch(
-        `http://localhost:5000/products/api/wishlist/addToWishlist/${productId}`,
+        `https://shopify-backend-mndn.vercel.app/products/api/wishlist/addToWishlist/${productId}`,
         { method: "POST" }
       );
     }
@@ -259,7 +259,7 @@ const toggleWishlist = async (productId) => {
     
 const handleQuantityI = async (productId) => {
   const res = await fetch(
-    `http://localhost:5000/products/api/cart/update/${productId}`,
+    `https://shopify-backend-mndn.vercel.app/products/api/cart/update/${productId}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -299,7 +299,7 @@ const handleQuantityI = async (productId) => {
 
 const handleQuantityD = async (productId) => {
   const res = await fetch(
-    `http://localhost:5000/products/api/cart/update/${productId}`,
+    `https://shopify-backend-mndn.vercel.app/products/api/cart/update/${productId}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
